@@ -73,7 +73,7 @@ contract MultiSigWallet {
         numConfirmationsRequired = _numConfirmationsRequired;
     }
 
-    // Fallback function
+    // Fallback function - Called if other functions don't match call or ether is sent to contract without data
     receive() external payable {
         emit Deposit(msg.sender, msg.value, address(this).balance);
     }
@@ -197,5 +197,10 @@ contract MultiSigWallet {
             transaction.executed,
             transaction.numConfirmations
         );
+    }
+
+    // get balance, maybe not necessary
+    function getBalance() public view returns (uint256 balance) {
+        return address(this).balance / 1 ether; // convert to ether
     }
 }
